@@ -1,0 +1,123 @@
+@startuml
+'Makes image a bit smaller:
+/'!pragma layout smetana'/
+
+'All entities
+object StreamingPlatform
+
+
+object Media
+
+object Rating
+object ReleaseYear
+
+object Film
+
+object Series
+object Season
+object Episode
+
+object Genre
+object Crime
+object War
+object Drama
+object Family
+object Romance
+object SciFi
+object Comedy
+
+object User
+object WantToWatchList
+object HaveAlreadyWatchedList
+
+StreamingPlatform *-- Media : has-a
+StreamingPlatform *-- User : has-a
+
+User *-- WantToWatchList : has-a
+User *-- HaveAlreadyWatchedList : has-a
+
+Media <|-- "..*" Film : is - a
+Media *-- Rating : has-a
+Media *-- ReleaseYear : has-a
+
+Media <|-- Series : is - a
+Series *-- Season : has-a
+Season *---- Episode : has-a
+
+Film *-- "1" Genre : has-a
+Series *-- "1" Genre : has-a
+
+Genre <|-- "1" Crime : is-a
+Genre <|-- "1" War : is-a
+Genre <|-- "1" Drama : is-a
+Genre <|-- "1" Family : is-a
+Genre <|-- "1" Romance : is-a
+Genre <|-- "1" SciFi : is-a
+Genre <|-- "1" Comedy : is-a
+
+
+
+
+
+
+
+
+
+
+
+
+
+/'DomainModel from monopoly project:
+object Game
+object Player
+object Dice
+object CardDeck
+object Card
+object Board
+object Field
+object Property
+object Prison
+object Visit
+object Tax
+object Parking
+object Start
+object Chance
+object ShippingLine
+object Brewery
+object Building
+object Deed
+object Bank
+object Business
+object Plot
+
+Game *-- Board
+Game *-- "2..6" Player
+
+Game *-- Dice
+Board *-- "40" Field : has-a
+
+Plot *-- Building: has-a
+Property "1" *-- "1" Deed: has-a
+Player *-- "0..29" Deed
+Business <|-- "4" ShippingLine
+Business <|--  "2" Brewery : is - a
+
+Field <|--  "29" Property : is - a
+Field <|-- Start : is - a
+Field <|-- Chance
+Field <|-- Parking
+Field <|-- Tax
+Field <|-- Prison
+Field <|-- Visit
+
+
+CardDeck --* Chance
+Property <|-- Business
+Property <|-- "23" Plot: is - a
+
+Player *-- "0..10" Card
+CardDeck "1" *-- "100"  Card
+Game *-- Bank'/
+
+@enduml
+
