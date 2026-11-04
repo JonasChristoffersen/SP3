@@ -30,19 +30,19 @@ object User
 object WantToWatchList
 object HaveAlreadyWatchedList
 
-StreamingPlatform *-- Media : has-a
-StreamingPlatform *-- User : has-a
+StreamingPlatform *-- "200" Media : has-a
+StreamingPlatform *-- "1" User : has-a
 
-User *-- WantToWatchList : has-a
-User *-- HaveAlreadyWatchedList : has-a
+User *-- "*" WantToWatchList : has-a
+User *-- "*" HaveAlreadyWatchedList : has-a
 
-Media <|-- "..*" Film : is - a
-Media *-- Rating : has-a
-Media *-- ReleaseYear : has-a
+Media <|-- "1..100" Film : is - a
+Media *-- "1..10" Rating : has-a
+Media *-- "1" ReleaseYear : has-a
 
-Media <|-- Series : is - a
-Series *-- Season : has-a
-Season *---- Episode : has-a
+Media <|-- "1..100" Series : is - a
+Series *-- "1..*" Season : has-a
+Season *---- "1..*" Episode : has-a
 
 Film *-- "1" Genre : has-a
 Series *-- "1" Genre : has-a

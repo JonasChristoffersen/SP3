@@ -1,0 +1,51 @@
+@startuml
+
+note "User can pick ONE of \nthe listed titles" as N1
+
+User --> (StartMenu)
+(StartMenu) --> (Login with existing account)
+(StartMenu) --> (Create new account)
+(Create new account) --> (Login with existing account)
+(Login with existing account) --> (MainMenu)
+
+(MainMenu) --> (SearchMedia)
+(SearchMedia) --> (NameOfMedia)
+(SearchMedia) --> (GenreOfMedia)
+
+/'(NameOfMedia) --> (ReturnToMainMenu)
+(GenreOfMedia) --> (ReturnToMainMenu)'/
+
+(MainMenu) --> (UserInformation)
+(UserInformation) --> (SeenMedia)
+(UserInformation) --> (SavedMedia)
+
+(NameOfMedia) --> (DisplaySingleMedia)
+(GenreOfMedia) --> (DisplayListOfMedia)
+(SeenMedia) --> (DisplayListOfMedia)
+(SavedMedia) --> (DisplayListOfMedia)
+(DisplayListOfMedia) - N1
+
+(DisplayListOfMedia) --> (DisplaySingleMedia)
+
+(DisplaySingleMedia) --> (PlayMedia)
+(DisplaySingleMedia) --> (SaveToMediaList)
+(DisplaySingleMedia) --> (DeleteFromMediaList)
+
+(PlayMedia) --> (SaveToSeenMedia)
+
+(DisplayListOfMedia) --> (ReturnToMainMenu)
+(DisplaySingleMedia) --> (ReturnToMainMenu)
+(DeleteFromMediaList) --> (ReturnToMainMenu)
+(SaveToMediaList) --> (ReturnToMainMenu)
+(SaveToSeenMedia) --> (ReturnToMainMenu)
+
+
+
+/'(SeenMedia) --> (ReturnToMainMenu)
+(SavedMedia) --> (ReturnToMainMenu)'/
+
+
+
+(ReturnToMainMenu) -----> (MainMenu)
+
+@enduml

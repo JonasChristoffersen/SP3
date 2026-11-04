@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+'JEG ER IKKE SIKKER PÅ HVORDAN DENNE LØSES/SKRIVES!
+
+note "User can pick ONE of \nthe listed titles" as N1
+
+user --> (SearchMedia)
+
+(SearchMedia) --> (NameOfMedia)
+(SearchMedia) --> (GenreOfMedia)
+(SearchMedia) --> (SavedMedia)
+(SearchMedia) --> (SeenMedia)
+
+(NameOfMedia) --> (DisplaySingleMedia)
+(GenreOfMedia) --> (DisplayListOfMedia)
+(SeenMedia) --> (DisplayListOfMedia)
+(SavedMedia) --> (DisplayListOfMedia)
+(DisplayListOfMedia) - N1
+
+(DisplayListOfMedia) --> (DisplaySingleMedia)
+
+(DisplaySingleMedia) --> (PlayMedia)
+(DisplaySingleMedia) --> (SaveToMediaList)
+(DisplaySingleMedia) --> (DeleteFromMediaList)
+
+(PlayMedia) --> (SaveToSeenMedia)
+
+(DisplayListOfMedia) --> (ReturnToMainMenu)
+(DisplaySingleMedia) --> (ReturnToMainMenu)
+(DeleteFromMediaList) --> (ReturnToMainMenu)
+(SaveToMediaList) --> (ReturnToMainMenu)
+(SaveToSeenMedia) --> (ReturnToMainMenu)
+
+@enduml

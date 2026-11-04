@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+User --> (StartMenu)
+(StartMenu) --> (Login with existing account)
+(StartMenu) --> (Create new account)
+
+(Create new account) --> (Login with existing account)
+
+@enduml
