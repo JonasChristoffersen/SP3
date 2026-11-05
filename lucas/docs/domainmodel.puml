@@ -1,0 +1,32 @@
+@startuml
+!pragma layout smetana
+
+object StreamingService
+object User
+object WatchedList
+object SavedList
+object Media
+object Movie
+object Series
+object Season
+object Episode
+object Category
+
+StreamingService *-- "0..*" User : has-a
+StreamingService *-- "1..*" Category : has-a
+
+User *-- "1" WatchedList : has-a
+User *-- "1" SavedList : has-a
+
+WatchedList *-- "0..*" Media
+SavedList *-- "0..*" Media
+
+Media <|-- Movie : is - a
+Media <|-- Series : is - a
+
+Category "1..*" *-- "0..*" Media : has-a
+
+Series *-- "1..*" Season : has-a
+Season *-- "1..*" Episode : has-a
+
+@enduml
