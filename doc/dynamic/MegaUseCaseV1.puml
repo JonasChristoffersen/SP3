@@ -1,5 +1,9 @@
 @startuml
 
+!pragma layout smetana
+
+
+
 note "User can pick ONE of \nthe listed titles" as N1
 
 User --> (StartMenu)

@@ -1,0 +1,29 @@
+@startuml
+
+!pragma layout smetana
+
+User --> (StartMenu)
+
+(StartMenu) --> (Login)
+(StartMenu) --> (CreateNewAccount)
+(CreateNewAccount) <--> (Login)
+(Login) --> (MainMenu)
+
+(MainMenu) <--> (UserInformation)
+(MainMenu) <--> (SearchMedia)
+(MainMenu) --> (LogOut)
+(MainMenu) <--> (DisplayListOfMedia)
+(MainMenu) <--> (DisplaySpecificMedia)
+
+(UserInformation) <--> (EditUserInformation)
+
+(SearchMedia) <--> (DisplayListOfMedia)
+(DisplayListOfMedia) <--> (DisplaySpecificMedia)
+
+(DisplaySpecificMedia) <--> (PlayMedia)
+(DisplaySpecificMedia) <--> (EditWatchList)
+
+(LogOut) --> (StartMenu)
+
+
+@enduml

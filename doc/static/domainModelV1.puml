@@ -41,7 +41,7 @@ Media *-- "1" ReleaseYear : has-a
 
 Media <|-- "100" Series : is - a
 Series *-- "1..*" Season : has-a
-Season *---- "1..*" Episode : has-a
+Season *-- "1..*" Episode : has-a
 
 Film *-- "1" Genre : has-a
 Series *-- "1" Genre : has-a
