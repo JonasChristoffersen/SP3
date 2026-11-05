@@ -24,7 +24,6 @@ object Drama
 object Family
 object Romance
 object SciFi
-object Comedy
 
 object User
 object WantToWatchList
@@ -36,11 +35,11 @@ StreamingPlatform *-- "1" User : has-a
 User *-- "*" WantToWatchList : has-a
 User *-- "*" HaveAlreadyWatchedList : has-a
 
-Media <|-- "1..100" Film : is - a
+Media <|-- "100" Film : is - a
 Media *-- "1..10" Rating : has-a
 Media *-- "1" ReleaseYear : has-a
 
-Media <|-- "1..100" Series : is - a
+Media <|-- "100" Series : is - a
 Series *-- "1..*" Season : has-a
 Season *---- "1..*" Episode : has-a
 
@@ -53,7 +52,6 @@ Genre <|-- "1" Drama : is-a
 Genre <|-- "1" Family : is-a
 Genre <|-- "1" Romance : is-a
 Genre <|-- "1" SciFi : is-a
-Genre <|-- "1" Comedy : is-a
 
 
 

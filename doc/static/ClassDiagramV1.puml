@@ -1,0 +1,77 @@
+@startuml
+
+!pragma layout smetana
+
+class Main {
+    + static void main(String[] args)
+}
+
+class StreamingPlatform {
+    - String name
+
+    + StreamingPlatform(String name)
+}
+
+class Media {
+}
+
+class Series {
+}
+
+class Film {
+}
+
+abstract class Genre {
+}
+
+class Crime {
+}
+
+class War {
+}
+
+class Drama {
+}
+
+class Family {
+}
+
+class Romance {
+}
+
+class SciFi {
+}
+
+class User {
+}
+
+
+package util {
+class FileIO {
+}
+class TextUI {
+}
+}
+
+Main *-- StreamingPlatform : has-a
+
+StreamingPlatform *-- Media : has-a
+StreamingPlatform *-- User : has-a
+
+Media <|-- Film : is-a
+Media <|-- Series : is-a
+
+Series *-- Genre : has-a
+Film *-- Genre : has-a
+
+Genre <|-- Crime : is-a
+Genre <|-- War : is-a
+Genre <|-- Drama : is-a
+Genre <|-- Family : is-a
+Genre <|-- SciFi : is-a
+Genre <|-- Romance : is-a
+
+
+
+
+@enduml

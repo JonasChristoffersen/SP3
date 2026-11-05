@@ -2,9 +2,9 @@
 'https://plantuml.com/use-case-diagram
 
 User --> (StartMenu)
-(StartMenu) --> (Login with existing account)
-(StartMenu) --> (Create new account)
+(StartMenu) --> (LoginWithExistingAccount)
+(StartMenu) --> (CreateNewAccount)
 
-(Create new account) --> (Login with existing account)
+(CreateNewAccount) --> (LoginWithExistingAccount)
 
 @enduml
