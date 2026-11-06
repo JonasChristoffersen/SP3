@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+'Er i tvivl om denne giver mening at have da det er
+'lavet i UC3_AND-_UC4_PickMediaFromLists.puml
+
+User --> (DisplaySingleMedia)
+
+
+(DisplaySingleMedia) --> (PlayMedia)
+(DisplaySingleMedia) --> (SaveToMediaList)
+(DisplaySingleMedia) --> (DeleteFromMediaList)
+
+(PlayMedia) --> (SaveToSeenMedia)
+
+/'(DisplaySingleMedia) --> (ReturnToMainMenu)
+(DeleteFromMediaList) --> (ReturnToMainMenu)
+(SaveToMediaList) --> (ReturnToMainMenu)
+(SaveToSeenMedia) --> (ReturnToMainMenu)'/
+
+@enduml

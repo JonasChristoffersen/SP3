@@ -1,0 +1,57 @@
+@startuml
+'Makes image a bit smaller:
+/'!pragma layout smetana'/
+
+'All entities
+object StreamingPlatform
+
+
+object Media
+
+
+object Film
+
+object Series
+object Season
+object Episode
+
+object Genre
+
+/'object Crime
+object War
+object Drama
+object Family
+object Romance
+object SciFi'/
+
+object User
+object SavedList
+object WatchedList
+
+StreamingPlatform *-- "200" Media : has-a
+StreamingPlatform *-- "1" User : has-a
+
+User *-- "1" SavedList : has-a
+User *-- "1" WatchedList : has-a
+
+SavedList *-- "*" Media : has-a
+WatchedList *-- "*" Media : has-a
+
+Media <|-- "100" Film : is - a
+
+Media <|-- "100" Series : is - a
+Series *-- "1..*" Season : has-a
+Season *-- "1..*" Episode : has-a
+
+Film *-- "1" Genre : has-a
+Series *-- "1" Genre : has-a
+
+/'Genre <|-- "1" Crime : is-a
+Genre <|-- "1" War : is-a
+Genre <|-- "1" Drama : is-a
+Genre <|-- "1" Family : is-a
+Genre <|-- "1" Romance : is-a
+Genre <|-- "1" SciFi : is-a'/
+
+@enduml
+

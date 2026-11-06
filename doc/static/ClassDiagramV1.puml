@@ -1,0 +1,132 @@
+@startuml
+
+!pragma layout smetana
+
+class Main {
+    + {static} static void main(String[] args)
+}
+
+class StreamingPlatform {
+    - String name
+    - ArrayList<User>
+
+    + StreamingPlatform(String name)
+    + StartMenu()
+    + MainMenu()
+}
+
+class Media {
+}
+
+class Series {
+}
+
+class Season {
+}
+
+class Episode {
+}
+
+class Film {
+}
+
+interface PlayableMedia {
+    - String MediaName
+    - int PlayTime
+}
+
+class Rating {
+}
+
+class ReleaseYear {
+}
+
+abstract class Genre {
+}
+
+class Crime {
+}
+
+class War {
+}
+
+class Drama {
+}
+
+class Family {
+}
+
+class Romance {
+}
+
+class SciFi {
+}
+
+class User {
+    - String UserName
+    - String Password
+}
+
+class SavedMedia {
+    - ArrayList<Media> SavedMedia
+}
+
+class SeenMedia {
+    - ArrayList<Media> SeenMedia
+}
+
+
+
+package util {
+    class FileIO {
+        + void saveData(ArrayList<String> data, String path, String header)
+        + ArrayList<String> readData(String path)
+        + String[] readData(String path, int length)
+    }
+    class TextUI {
+        - Scanner scan
+        + boolean promptBinary(String msg)
+        + String promptText(String msg)
+        + int promptNumeric(String msg)
+        + ArrayList<String> promptChoice(ArrayList<String> options, int limit, String msg)
+        + void displayMessage(String msg)
+        + void displayList(ArrayList<String> list, String msg)
+    }
+
+}
+
+Main *-- "1" StreamingPlatform : has-a
+
+StreamingPlatform *-- "200" Media : has-a
+StreamingPlatform *-- "*" User : has-a
+StreamingPlatform *-- "1" TextUI : has-a
+StreamingPlatform *-- "1" FileIO : has-a
+
+User *-- "0..200" SavedMedia : has-a
+User *-- "0..200" SeenMedia : has-a
+
+Media <|-- "100" Film : is-a
+Media <|-- "100" Series : is-a
+Media *-- "1" Rating : has-a
+Media *-- "1" ReleaseYear : has-a
+
+PlayableMedia <|-- "1" Film : is-a
+PlayableMedia <|-- "1" Episode : is-a
+
+Series *-- "1" Genre : has-a
+Film *-- "1" Genre : has-a
+
+Series *-- "1..*" Season : has-a
+Season *-- "1..*" Episode : has-a
+
+Genre <|-- "1" Crime : is-a
+Genre <|-- "1" War : is-a
+Genre <|-- "1" Drama : is-a
+Genre <|-- "1" Family : is-a
+Genre <|-- "1" SciFi : is-a
+Genre <|-- "1" Romance : is-a
+
+
+
+
+@enduml
