@@ -33,6 +33,23 @@ public class TextUI {
         return promptBinary(msg);
     }
 
+    public int readInt(String msg, int min, int max) {
+        System.out.println(msg);
+        int input = 0;
+        try {
+            input = scan.nextInt();
+            if (input >= min && input <= max) {
+                return input;
+            } else {
+                return readInt(msg, min, max);
+            }
+        } catch(InputMismatchException e){
+            scan.nextLine();
+            System.out.println("Write a number");
+            return readInt(msg, min, max);
+        }
+    }
+
     public int promptNumeric(String msg) {
         System.out.println(msg);
         int input = 0;
