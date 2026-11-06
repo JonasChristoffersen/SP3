@@ -17,13 +17,6 @@ object Episode
 
 object Genre
 
-/'object Crime
-object War
-object Drama
-object Family
-object Romance
-object SciFi'/
-
 object User
 object SavedList
 object WatchedList
@@ -45,13 +38,6 @@ Season *-- "1..*" Episode : has-a
 
 Film *-- "1" Genre : has-a
 Series *-- "1" Genre : has-a
-
-/'Genre <|-- "1" Crime : is-a
-Genre <|-- "1" War : is-a
-Genre <|-- "1" Drama : is-a
-Genre <|-- "1" Family : is-a
-Genre <|-- "1" Romance : is-a
-Genre <|-- "1" SciFi : is-a'/
 
 @enduml
 

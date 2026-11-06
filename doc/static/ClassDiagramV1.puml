@@ -15,67 +15,48 @@ class StreamingPlatform {
     + MainMenu()
 }
 
-class Media {
+class User {
+    - String username
+    - String password
+    - ArrayList<Media> savedMedia
+    - ArrayList<Media> watchedMedia
+    + void addSavedMedia(Media media)
+    + void removeSavedMedia(Media media)
+    + void addWatchedMedia(Media media)
 }
 
-class Series {
-}
-
-class Season {
-}
-
-class Episode {
-}
-
-class Film {
+abstract class Media {
+    - String name
+    - double rating
+    - int releaseYear
+    - ArrayList<Genre> genre
+    + Media(String name, double rating, int releaseYear, ArrayList<Genre> genre)
 }
 
 interface PlayableMedia {
-    - String MediaName
-    - int PlayTime
+    + void playMedia()
 }
 
-class Rating {
+class Series {
+    - ArrayList<Season> seasons
+    + Series(String name, double rating, int releaseYear, ArrayList<Genre> genre, ArrayList<Season> seasons)
 }
 
-class ReleaseYear {
+class Season {
+    - ArrayList<Episode> episodes
+    + Season(ArrayList<Episode> episodes)
 }
 
-abstract class Genre {
+class Episode {
+   + void playMedia()
 }
 
-class Crime {
+class Film {
+    + void playMedia()
 }
 
-class War {
+enum Genre {
 }
-
-class Drama {
-}
-
-class Family {
-}
-
-class Romance {
-}
-
-class SciFi {
-}
-
-class User {
-    - String UserName
-    - String Password
-}
-
-class SavedMedia {
-    - ArrayList<Media> SavedMedia
-}
-
-class SeenMedia {
-    - ArrayList<Media> SeenMedia
-}
-
-
 
 package util {
     class FileIO {
@@ -93,6 +74,9 @@ package util {
         + void displayList(ArrayList<String> list, String msg)
     }
 
+    class DataLoader {
+    }
+
 }
 
 Main *-- "1" StreamingPlatform : has-a
@@ -102,29 +86,17 @@ StreamingPlatform *-- "*" User : has-a
 StreamingPlatform *-- "1" TextUI : has-a
 StreamingPlatform *-- "1" FileIO : has-a
 
-User *-- "0..200" SavedMedia : has-a
-User *-- "0..200" SeenMedia : has-a
+Film <|.. "1" PlayableMedia : is-a
+Episode <|.. "1" PlayableMedia : is-a
 
 Media <|-- "100" Film : is-a
 Media <|-- "100" Series : is-a
-Media *-- "1" Rating : has-a
-Media *-- "1" ReleaseYear : has-a
+Media *-- "1..*" Genre : has-a
 
-PlayableMedia <|-- "1" Film : is-a
-PlayableMedia <|-- "1" Episode : is-a
-
-Series *-- "1" Genre : has-a
-Film *-- "1" Genre : has-a
 
 Series *-- "1..*" Season : has-a
 Season *-- "1..*" Episode : has-a
 
-Genre <|-- "1" Crime : is-a
-Genre <|-- "1" War : is-a
-Genre <|-- "1" Drama : is-a
-Genre <|-- "1" Family : is-a
-Genre <|-- "1" SciFi : is-a
-Genre <|-- "1" Romance : is-a
 
 
 
