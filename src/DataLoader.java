@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class DataLoader {
+public class DataLoader {
     private final FileIO fileIO = new FileIO();
     ArrayList<Media> mediaArrayList = new ArrayList<>(); //This should be reworked when media class is made abstract!
 

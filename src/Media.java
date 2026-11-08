@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Media {
-    String name;
-    int releaseYear;
-    ArrayList<Genre> genre;
-    double rating;
+    private String name;
+    private int releaseYear;
+    private ArrayList<Genre> genre;
+    private double rating;
 
     //Film constructor
     public Media(String name, int releaseYear, ArrayList<Genre> genre, double rating) {
