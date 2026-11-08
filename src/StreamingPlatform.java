@@ -2,10 +2,11 @@ import java.util.ArrayList;
 
 public class StreamingPlatform {
     private String name;
-    private ArrayList<User> users; //= new ArrayList<>();
+    private ArrayList<User> users;
 
     public StreamingPlatform(String name){
         this.name = name;
+        this.users = new ArrayList<>();
     }
 
     public void startMenu(){
