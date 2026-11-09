@@ -1,4 +1,4 @@
-public class Season implements PlayableMedia {
+public class Season extends Series implements PlayableMedia {
 
     private String season;
     private String episodes;
@@ -11,8 +11,8 @@ public class Season implements PlayableMedia {
     }
 
     @Override
-    public void playMedia() {
-
+    public void playMedia(User user, Media media) {
+        super.playMedia(user, media);
     }
 
     @Override

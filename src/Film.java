@@ -8,7 +8,7 @@ public class Film extends Media implements PlayableMedia{
     }
 
     @Override
-    public void playMedia() {
-
+    public void playMedia(User user, Media media) {
+        super.playMedia(user, media);
     }
 }

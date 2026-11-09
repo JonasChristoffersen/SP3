@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Media {
+public abstract class Media implements PlayableMedia{
     private String name;
     private String releaseYear;
     private ArrayList<Genre> genres;
@@ -35,8 +35,18 @@ public abstract class Media {
         return Integer.parseInt(year);
     }
 
+    public ArrayList<Genre> getGenres() {
+        return genres;
+    }
+
     public boolean containsGenre(Genre genre){
         return genres.contains(genre);
+    }
+
+    @Override
+    public void playMedia(User user, Media media) {
+        user.addWatchedMedia(media);
+        System.out.println("Now playing: " + media.getName());
     }
 
 }

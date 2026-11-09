@@ -10,6 +10,7 @@ public class StreamingPlatform {
         this.name = name;
         this.medias = dataLoader.getMediaArrayList();
         this.ui = new TextUI();
+        this.user = new User(); //Can be removed!
         /*this.user = new ArrayList<>();*/
     }
 
@@ -103,8 +104,22 @@ public class StreamingPlatform {
     private void chooseMediaMenu(ArrayList<Media> mediaArrayList) {
         Menu menu = new Menu("Choose a media from list below:");
         for (Media media : mediaArrayList) {
-            menu.add(media.getName(), () -> System.out.println("showing " + media.getName()));
+            menu.add(media.getName(), () -> displaySpecificMedia(media));
         }
+        menu.show();
+    }
+
+    public void displaySpecificMedia (Media media) {
+        ui.displayMessage("====== Specific media information ======"
+                + "\n" + "Media name: " + media.getName()
+                + "\n" + "Media rating: " + media.getRating()
+                + "\n" + "Media release year: " + media.getReleaseYear()
+                + "\n" + "Media genre(s): " + media.getGenres()
+        );
+
+        Menu menu = new Menu("You have the following options:");
+        menu.add("Play media", () -> media.playMedia(user, media)); //Add media to watched list
+        menu.add("Save media to saved list", () -> System.out.println(media.getName() + " is now saved to saved list"));
         menu.show();
     }
 
