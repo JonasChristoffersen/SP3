@@ -26,6 +26,10 @@ public abstract class Media {
         return name;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
     public boolean containsGenre(Genre genre){
         return genres.contains(genre);
     }

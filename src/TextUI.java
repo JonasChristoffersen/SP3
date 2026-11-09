@@ -66,6 +66,22 @@ public class TextUI {
         return input;
     }
 
+    public double promptDoubleNumeric(String msg) {
+        System.out.println(msg);
+        double input = 0.0;
+        try {
+            input = scan.nextDouble();
+        } catch (InputMismatchException e) {
+            scan.nextLine();
+            System.out.println("Skriv et tal");
+            input = promptDoubleNumeric(msg);
+        }
+
+        scan.nextLine();//scannerbug flush
+
+        return input;
+    }
+
     public void displayList(ArrayList<String> list, String msg, boolean numbered) {//parameter der forstæller OM listen er nummereret eller ej.
         System.out.println(msg);
 

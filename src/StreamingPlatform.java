@@ -6,14 +6,14 @@ public class StreamingPlatform {
     private ArrayList<Media> medias;
     private TextUI ui;
 
-    public StreamingPlatform(String name, DataLoader dataLoader){
+    public StreamingPlatform(String name, DataLoader dataLoader) {
         this.name = name;
         this.medias = dataLoader.getMediaArrayList();
         this.ui = new TextUI();
         /*this.user = new ArrayList<>();*/
     }
 
-    public void startMenu(){
+    public void startMenu() {
        /*
         String[] options = {"Log ind", "Create account"};
         ArrayList<String> choice = ui.promptChoice(options);
@@ -27,7 +27,7 @@ public class StreamingPlatform {
         */
     }
 
-    public void mainMenu(){
+    public void mainMenu() {
         /*
         String[] options = {"User","Search bar","Log out"};
         ArrayList<String> choice = ui.promptChoice(options);
@@ -44,6 +44,7 @@ public class StreamingPlatform {
         Menu menu = new Menu("What kind of search do you want to use?");
         menu.add("Search by name", () -> chooseMediaMenu(searchByName()));
         menu.add("Search by genre", () -> chooseMediaMenu(searchByGenre()));
+        menu.add("Search by rating", () -> chooseMediaMenu(searchByRating()));
         menu.show();
     }
 
@@ -58,16 +59,28 @@ public class StreamingPlatform {
         return searchArray;
     }
 
-    private ArrayList<Media> searchByGenre(){
+    private ArrayList<Media> searchByGenre() {
         ArrayList<Media> searchArray = new ArrayList<>();
         Genre[] input = new Genre[1];
         Menu menu = new Menu("Choose a genre from list below: ");
-        for(Genre genre : Genre.values()){
+        for (Genre genre : Genre.values()) {
             menu.add(genre.name(), () -> input[0] = genre);
         }
         menu.show();
-        for (Media media : medias){
-            if (media.containsGenre(input[0])){
+        for (Media media : medias) {
+            if (media.containsGenre(input[0])) {
+                searchArray.add(media);
+            }
+        }
+        return searchArray;
+    }
+
+    private ArrayList<Media> searchByRating() {
+        ArrayList<Media> searchArray = new ArrayList<>();
+        double ratingMin = ui.promptDoubleNumeric("Type a minimum rating: ");
+        double ratingMax = ui.promptDoubleNumeric("Type a maximum rating: ");
+        for (Media media : medias) {
+            if (media.getRating() >= ratingMin && media.getRating() <= ratingMax) {
                 searchArray.add(media);
             }
         }
@@ -81,7 +94,6 @@ public class StreamingPlatform {
         }
         menu.show();
     }
-
 
 
 }
