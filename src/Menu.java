@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +6,8 @@ public class Menu {
     private final String title;
     private final List<Action> actions;
 
-    public Menu(TextUI ui, String title) {
-        this.ui = ui;
+    public Menu(String title) {
+        this.ui = new TextUI();
         this.title = title;
         this.actions = new ArrayList<>();
     }

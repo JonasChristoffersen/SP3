@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class DataLoader {
     private final FileIO fileIO = new FileIO();
-    ArrayList<Media> mediaArrayList = new ArrayList<>(); //This should be reworked when media class is made abstract!
+    private ArrayList<Media> mediaArrayList = new ArrayList<>(); //This should be reworked when media class is made abstract!
 
     //Name; ReleaseYear; Genre; Rating
     public void loadFilm(String path) {
@@ -16,7 +16,7 @@ public class DataLoader {
             mediaArrayList.add(new Film(name, releaseYear, genres, rating));
 
             //Used sout for checking values are assigned correctly as actual solution is currently missing (can be out-commented)
-            System.out.println("Name: " + values[0].trim() + " | releaseYear: " + releaseYear + " | genre: " + genres + " | rating: " + rating);
+            /*System.out.println("Name: " + values[0].trim() + " | releaseYear: " + releaseYear + " | genre: " + genres + " | rating: " + rating);*/
         }
     }
 
@@ -33,7 +33,7 @@ public class DataLoader {
             mediaArrayList.add(new Series(name, releaseYear, genres, rating, seasons));
 
             //Used sout for checking values are assigned correctly as actual solution is currently missing (can be out-commented)
-            System.out.println("Name: " + values[0].trim() + " | releaseYear: " + releaseYear + " | genre: " + genres + " | rating: " + rating + " | seasons: " + seasons);
+            /*System.out.println("Name: " + values[0].trim() + " | releaseYear: " + releaseYear + " | genre: " + genres + " | rating: " + rating + " | seasons: " + seasons);*/
         }
     }
 
@@ -60,5 +60,9 @@ public class DataLoader {
             seasons.add(new Season(s));
         }
         return seasons;
+    }
+
+    public ArrayList<Media> getMediaArrayList() {
+        return mediaArrayList;
     }
 }

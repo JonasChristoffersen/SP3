@@ -20,6 +20,7 @@ class User {
     - String password
     - ArrayList<Media> savedMedia
     - ArrayList<Media> watchedMedia
+    + User(String username, String password, ArrayList<Media> savedMedia , ArrayList<Media> watchedMedia)
     + void addSavedMedia(Media media)
     + void removeSavedMedia(Media media)
     + void addWatchedMedia(Media media)
@@ -27,10 +28,10 @@ class User {
 
 abstract class Media {
     - String name;
-    - int releaseYear;
+    - String releaseYear;
     - ArrayList<Genre> genre;
     - double rating;
-    + Media(String name, double rating, int releaseYear, ArrayList<Genre> genre)
+    + Media(String name, double rating, String releaseYear, ArrayList<Genre> genre)
 }
 
 interface PlayableMedia {
@@ -39,19 +40,19 @@ interface PlayableMedia {
 
 class Series {
     - ArrayList<Season> seasons
-    + Series(String name, double rating, int releaseYear, ArrayList<Genre> genre, ArrayList<Season> seasons)
+    + Series(String name, double rating, String releaseYear, ArrayList<Genre> genre, ArrayList<Season> seasons)
 }
 
 class Season {
-    - ArrayList<Episode> episodes
-    + Season(ArrayList<Episode> episodes)
-}
-
-class Episode {
-   + void playMedia()
+    - String season
+    - String episodes
+    + Season(String season)
+    + void playMedia()
+    + String toString()
 }
 
 class Film {
+    + Film(String name, double rating, String releaseYear, ArrayList<Genre> genre)
     + void playMedia()
 }
 
@@ -88,6 +89,7 @@ package util {
         + ArrayList<String> readData(String path)
         + String[] readData(String path, int length)
     }
+
     class TextUI {
         - Scanner scan
         + boolean promptBinary(String msg)
@@ -96,6 +98,24 @@ package util {
         + ArrayList<String> promptChoice(ArrayList<String> options, int limit, String msg)
         + void displayMessage(String msg)
         + void displayList(ArrayList<String> list, String msg)
+        + int readInt(String msg, int min, int max)
+    }
+
+    class Menu {
+        - TextUI ui
+        - String title
+        - list<Action> actions
+        + Menu(TextUI ui, String title)
+        + Menu add(String text, Runnable runnable)
+        + void show()
+    }
+
+    class Action {
+        - String text
+        - Runnable runnable
+        + Action(String text, Runnable runnable)
+        + String getText()
+        + void run()
     }
 
     class DataLoader {
@@ -106,26 +126,30 @@ package util {
         - double loadRating(String ratingString)
         - ArrayList<String> loadSeasons(String seasonsString)
     }
-
 }
 
 Main *-- "1" StreamingPlatform : has-a
 
 StreamingPlatform *-- "200" Media : has-a
 StreamingPlatform *-- "*" User : has-a
-StreamingPlatform *-- "1" TextUI : has-a
-StreamingPlatform *-- "1" FileIO : has-a
+/'StreamingPlatform *-- "1" TextUI : has-a'/
+StreamingPlatform *-- "1..*" Menu : has-a
+/'StreamingPlatform *-- "1" FileIO : has-a'/
+StreamingPlatform *-- "1" DataLoader : has-a
 
 Film <|.. "1" PlayableMedia : is-a
-Episode <|.. "1" PlayableMedia : is-a
+Season <|.. "1" PlayableMedia : is-a
 
 Media <|-- "100" Film : is-a
 Media <|-- "100" Series : is-a
 Media *-- "1..*" Genre : has-a
 
-
 Series *-- "1..*" Season : has-a
-Season *-- "1..*" Episode : has-a
+
+Menu *-- "1" TextUI : has-a
+Menu *-- "1..*" Action : has-a
+
+DataLoader *-- "1" FileIO : has-a
 
 
 

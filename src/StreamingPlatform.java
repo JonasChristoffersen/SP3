@@ -2,11 +2,15 @@ import java.util.ArrayList;
 
 public class StreamingPlatform {
     private String name;
-    private ArrayList<User> users;
+    private User user;
+    private ArrayList<Media> medias;
+    private TextUI ui;
 
-    public StreamingPlatform(String name){
+    public StreamingPlatform(String name, DataLoader dataLoader){
         this.name = name;
-        this.users = new ArrayList<>();
+        this.medias = dataLoader.getMediaArrayList();
+        this.ui = new TextUI();
+        /*this.user = new ArrayList<>();*/
     }
 
     public void startMenu(){
@@ -35,5 +39,33 @@ public class StreamingPlatform {
         }
          */
     }
+
+    public void searchMedia() {
+        Menu menu = new Menu("What kind of search do you want to use?");
+        menu.add("Search by name", () -> chooseMediaMenu(searchByName()));
+        menu.add("Search by genre", () -> System.out.println("Search by genre"));
+        menu.show();
+    }
+
+    private ArrayList<Media> searchByName() {
+        ArrayList<Media> searchArray = new ArrayList<>();
+        String input = ui.promptText("Type the title you want to search for");
+        for (Media media : medias) {
+            if (media.getName().toLowerCase().contains(input.toLowerCase())) {
+                searchArray.add(media);
+            }
+        }
+        return searchArray;
+    }
+
+    private void chooseMediaMenu(ArrayList<Media> mediaArrayList) {
+        Menu menu = new Menu("Choose a media from list below:");
+        for (Media media : mediaArrayList) {
+            menu.add(media.getName(), () -> System.out.println("showing " + media.getName()));
+        }
+        menu.show();
+    }
+
+
 
 }
