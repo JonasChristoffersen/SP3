@@ -3,14 +3,14 @@ import java.util.ArrayList;
 public abstract class Media {
     private String name;
     private String releaseYear;
-    private ArrayList<Genre> genre;
+    private ArrayList<Genre> genres;
     private double rating;
 
     //Film constructor
     public Media(String name, String releaseYear, ArrayList<Genre> genre, double rating) {
         this.name = name;
         this.releaseYear = releaseYear;
-        this.genre = genre;
+        this.genres = genre;
         this.rating = rating;
     }
 
@@ -25,4 +25,9 @@ public abstract class Media {
     public String getName() {
         return name;
     }
+
+    public boolean containsGenre(Genre genre){
+        return genres.contains(genre);
+    }
+
 }

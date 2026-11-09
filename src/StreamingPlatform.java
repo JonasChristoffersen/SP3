@@ -43,7 +43,7 @@ public class StreamingPlatform {
     public void searchMedia() {
         Menu menu = new Menu("What kind of search do you want to use?");
         menu.add("Search by name", () -> chooseMediaMenu(searchByName()));
-        menu.add("Search by genre", () -> System.out.println("Search by genre"));
+        menu.add("Search by genre", () -> chooseMediaMenu(searchByGenre()));
         menu.show();
     }
 
@@ -52,6 +52,22 @@ public class StreamingPlatform {
         String input = ui.promptText("Type the title you want to search for");
         for (Media media : medias) {
             if (media.getName().toLowerCase().contains(input.toLowerCase())) {
+                searchArray.add(media);
+            }
+        }
+        return searchArray;
+    }
+
+    private ArrayList<Media> searchByGenre(){
+        ArrayList<Media> searchArray = new ArrayList<>();
+        Genre[] input = new Genre[1];
+        Menu menu = new Menu("Choose a genre from list below: ");
+        for(Genre genre : Genre.values()){
+            menu.add(genre.name(), () -> input[0] = genre);
+        }
+        menu.show();
+        for (Media media : medias){
+            if (media.containsGenre(input[0])){
                 searchArray.add(media);
             }
         }
