@@ -26,10 +26,10 @@ class User {
 }
 
 abstract class Media {
-    - String name
-    - double rating
-    - int releaseYear
-    - ArrayList<Genre> genre
+    - String name;
+    - int releaseYear;
+    - ArrayList<Genre> genre;
+    - double rating;
     + Media(String name, double rating, int releaseYear, ArrayList<Genre> genre)
 }
 
@@ -56,6 +56,30 @@ class Film {
 }
 
 enum Genre {
+    Crime
+    Drama
+    Biography
+    History
+    Sport
+    Romance
+    War
+    Mystery
+    Adventure
+    Family
+    Fantasy
+    Thriller
+    Horror
+    FilmNoir
+    Musical
+    Action
+    SciFi
+    Comedy
+    Western
+    Music
+    Animation
+    Documentary
+    TalkShow
+
 }
 
 package util {
@@ -75,6 +99,12 @@ package util {
     }
 
     class DataLoader {
+        - FileIO fileIO
+        + void loadFilm(String path)
+        + void loadSeries(String path)
+        - ArrayList<Genre> loadGenres(String genreString)
+        - double loadRating(String ratingString)
+        - ArrayList<String> loadSeasons(String seasonsString)
     }
 
 }
