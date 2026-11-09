@@ -1,11 +1,21 @@
 import java.util.ArrayList;
 
-public class Season{
+public class Season implements PlayableMedia{
 
-    private ArrayList<Episode> episodes;
+    private String season;
 
 
-    public Season(ArrayList<Episode> episodes) {
-        this.episodes = episodes;
+    public Season(String season) {
+        this.season = season;
+    }
+
+    @Override
+    public void playMedia() {
+
+    }
+
+    @Override
+    public String toString() {
+        return
     }
 }

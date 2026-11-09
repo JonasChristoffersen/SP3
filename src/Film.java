@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Film extends Media implements PlayableMedia{
 
 
-    public Film(String name, int releaseYear, ArrayList<Genre> genre, double rating) {
+    public Film(String name, String releaseYear, ArrayList<Genre> genre, double rating) {
         super(name, releaseYear, genre, rating);
     }
 

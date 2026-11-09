@@ -10,10 +10,10 @@ public class DataLoader {
         for (String s : data) {
             String[] values = s.split(";");
             String name = values[0].trim();
-            int releaseYear = Integer.parseInt(values[1].trim());
+            String releaseYear = values[1].trim();
             ArrayList<Genre> genres = loadGenres(values[2]);
             double rating = loadRating(values[3].trim());
-            mediaArrayList.add(new Media(name, releaseYear, genres, rating));
+            mediaArrayList.add(new Film(name, releaseYear, genres, rating));
 
             //Used sout for checking values are assigned correctly as actual solution is currently missing (can be out-commented)
             System.out.println("Name: " + values[0].trim() + " | releaseYear: " + releaseYear + " | genre: " + genres + " | rating: " + rating);
@@ -26,11 +26,11 @@ public class DataLoader {
         for (String s : data) {
             String[] values = s.split(";");
             String name = values[0].trim();
-            int releaseYear = Integer.parseInt(values[1].substring(0, 5).trim()); //Currently set to first release year for series!
+            String releaseYear = values[1].trim(); //Currently set to first release year for series!
             ArrayList<Genre> genres = loadGenres(values[2]);
             double rating = loadRating(values[3].trim());
-            ArrayList<String> seasons = loadSeasons(values[4]);
-            mediaArrayList.add(new Media(name, releaseYear, genres, rating, seasons));
+            ArrayList<Season> seasons = loadSeasons(values[4]);
+            mediaArrayList.add(new Series(name, releaseYear, genres, rating, seasons));
 
             //Used sout for checking values are assigned correctly as actual solution is currently missing (can be out-commented)
             System.out.println("Name: " + values[0].trim() + " | releaseYear: " + releaseYear + " | genre: " + genres + " | rating: " + rating + " | seasons: " + seasons);
@@ -53,11 +53,11 @@ public class DataLoader {
         return firstNumber + (decimalNumber / 10);
     }
 
-    private ArrayList<String> loadSeasons(String seasonsString) {
-        ArrayList<String> seasons = new ArrayList<>();
+    private ArrayList<Season> loadSeasons(String seasonsString) {
+        ArrayList<Season> seasons = new ArrayList<>();
         String[] seasonsArray = seasonsString.split(",");
         for (String s : seasonsArray) {
-            seasons.add(s.trim());
+            seasons.add(new Season(s));
         }
         return seasons;
     }
