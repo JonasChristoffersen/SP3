@@ -14,30 +14,17 @@ public class StreamingPlatform {
     }
 
     public void startMenu() {
-       /*
-        String[] options = {"Log ind", "Create account"};
-        ArrayList<String> choice = ui.promptChoice(options);
-
-        switch (choice) {
-            case "Log ind" -> { User user = login();
-                if (user != null) mainMenu(user); } break;
-            case "Opret bruger" -> createUser(); break;
-            default -> startMenu();
-        }
-        */
+       Menu menu = new Menu("Welcome to Streaming Platform");
+       menu.add("Login with already existing account", () -> System.out.println("LOGIN"));
+       menu.add("Create new account", () -> System.out.println("CREATE NEW ACCOUNT"));
+       menu.show();
     }
 
     public void mainMenu() {
-        /*
-        String[] options = {"User","Search bar","Log out"};
-        ArrayList<String> choice = ui.promptChoice(options);
-        switch (choice) {
-            case "User" -> userInformation(); break;
-            case "Search bar" -> seachMedia(); break;
-            case "Log out" -> logOut(); break;
-            default -> mainMenu();
-        }
-         */
+        Menu menu = new Menu("Main menu: ");
+        menu.add("Your account", () -> userInformation());
+        menu.add("Search in medias", () -> searchMedia());
+        menu.add("Log out", () -> System.out.println("LOG OUT"));
     }
 
     public void searchMedia() {
