@@ -30,6 +30,11 @@ public abstract class Media {
         return rating;
     }
 
+    public int getReleaseYear() {
+        String year = releaseYear.substring(0,4);
+        return Integer.parseInt(year);
+    }
+
     public boolean containsGenre(Genre genre){
         return genres.contains(genre);
     }

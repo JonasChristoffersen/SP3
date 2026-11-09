@@ -45,6 +45,7 @@ public class StreamingPlatform {
         menu.add("Search by name", () -> chooseMediaMenu(searchByName()));
         menu.add("Search by genre", () -> chooseMediaMenu(searchByGenre()));
         menu.add("Search by rating", () -> chooseMediaMenu(searchByRating()));
+        menu.add("Search by release year", () -> chooseMediaMenu(searchByReleaseYear()));
         menu.show();
     }
 
@@ -81,6 +82,18 @@ public class StreamingPlatform {
         double ratingMax = ui.promptDoubleNumeric("Type a maximum rating: ");
         for (Media media : medias) {
             if (media.getRating() >= ratingMin && media.getRating() <= ratingMax) {
+                searchArray.add(media);
+            }
+        }
+        return searchArray;
+    }
+
+    private ArrayList<Media> searchByReleaseYear() {
+        ArrayList<Media> searchArray = new ArrayList<>();
+        int min = ui.promptNumeric("Type a min release year: ");
+        int max = ui.promptNumeric("Type a max release year: ");
+        for (Media media : medias) {
+            if (media.getReleaseYear() >= min && media.getReleaseYear() <= max) {
                 searchArray.add(media);
             }
         }
