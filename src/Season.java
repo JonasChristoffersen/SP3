@@ -1,12 +1,13 @@
-import java.util.ArrayList;
-
-public class Season implements PlayableMedia{
+public class Season implements PlayableMedia {
 
     private String season;
+    private String episodes;
 
 
     public Season(String season) {
-        this.season = season;
+        String[] array = season.trim().split("-");
+        this.season = array[0];
+        this.episodes = array[1];
     }
 
     @Override
@@ -16,6 +17,6 @@ public class Season implements PlayableMedia{
 
     @Override
     public String toString() {
-        return
+        return "S" + season + "-E" + episodes;
     }
 }
