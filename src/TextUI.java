@@ -38,6 +38,7 @@ public class TextUI {
         int input = 0;
         try {
             input = scan.nextInt();
+            scan.nextLine();//scanner bug flush
             if (input >= min && input <= max) {
                 return input;
             } else {

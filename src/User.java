@@ -40,4 +40,28 @@ public class User {
         menu.show();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ArrayList<Media> getSavedMedia() {
+        return savedMedia;
+    }
+
+    public ArrayList<Media> getWatchedMedia() {
+        return watchedMedia;
+    }
+
 }
