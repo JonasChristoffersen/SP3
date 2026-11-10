@@ -10,6 +10,7 @@ public class StreamingPlatform {
         this.name = name;
         this.medias = dataLoader.getMediaArrayList();
         this.ui = new TextUI();
+        this.user = new User(); //Can be removed!
         /*this.user = new ArrayList<>();*/
     }
 
@@ -103,10 +104,37 @@ public class StreamingPlatform {
     private void chooseMediaMenu(ArrayList<Media> mediaArrayList) {
         Menu menu = new Menu("Choose a media from list below:");
         for (Media media : mediaArrayList) {
-            menu.add(media.getName(), () -> System.out.println("showing " + media.getName()));
+            menu.add(media.getName(), () -> displaySpecificMedia(media));
         }
         menu.show();
     }
 
+    public void displaySpecificMedia (Media media) {
+        ui.displayMessage("====== Specific media information ======"
+                + "\n" + "Name: " + media.getName()
+                + "\n" + "Rating: " + media.getRating()
+                + "\n" + "Release year: " + media.getReleaseYear()
+                + "\n" + "Genre(s): " + media.getGenres()
+        );
 
+        Menu menu = new Menu("You have the following options:");
+        menu.add("Play media", () -> {
+            if (media instanceof Series series) {
+                displaySeasonMenu(series);
+            } else {
+                PlayableMedia playableMedia = (PlayableMedia) media;
+                playableMedia.playMedia(user, media);
+            }
+        }); //Add media to watched list
+        menu.add("Save media to saved list", () -> System.out.println(media.getName() + " is now saved to saved list")); //CHECK UP ON THIS :)
+        menu.show();
+    }
+
+    private void displaySeasonMenu(Series series) {
+        Menu menu = new Menu("Choose a season from list below:");
+        for (Season season : series.getSeasons()) {
+            menu.add(season.toString(), () -> season.playMedia(user, series));
+        }
+        menu.show();
+    }
 }

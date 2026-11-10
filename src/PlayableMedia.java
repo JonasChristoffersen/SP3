@@ -1,5 +1,5 @@
 public interface PlayableMedia {
 
-    void playMedia();
+    void playMedia(User user, Media media);
 
 }
