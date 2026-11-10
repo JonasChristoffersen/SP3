@@ -1,2 +1,3 @@
 Username; Password; SavedMedia; WatchedMedia
-selina; musse123; ; 
+selina; musse123; Titanic; 
+lucas; musse123; ; Titanic

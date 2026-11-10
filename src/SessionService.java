@@ -8,6 +8,7 @@ public class SessionService {
     private final ArrayList<User> users = new ArrayList<>();
     private final FileIO fileIO = new FileIO();
     private User currentUser;
+    private TextUI ui = new TextUI();
 
     public SessionService(String path, ArrayList<Media> medias) {
         this.path = path;
@@ -29,7 +30,7 @@ public class SessionService {
             String password = values[1].trim();
             ArrayList<Media> savedMedia = values.length > 2 ? findMediaByNames(values[2]) : new ArrayList<>();
             ArrayList<Media> watchedMedia = values.length > 3 ? findMediaByNames(values[3]) : new ArrayList<>();
-            users.add(new User(username, password, savedMedia, watchedMedia));
+            users.add(new User(username, password, savedMedia, watchedMedia, ui));
         }
     }
 
@@ -59,7 +60,7 @@ public class SessionService {
         if (userExists(username)) {
             throw new IllegalArgumentException("The username \"" + username + "\" is already taken.");
         }
-        User user = new User(username, password, new ArrayList<>(), new ArrayList<>());
+        User user = new User(username, password, new ArrayList<>(), new ArrayList<>(), ui);
         users.add(user);
         saveUser();
         currentUser = user;

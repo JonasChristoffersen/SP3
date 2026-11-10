@@ -6,12 +6,14 @@ public class User {
     private ArrayList<Media> savedMedia;
     private ArrayList<Media> watchedMedia;
     private TextUI ui;
+    private boolean running = true;
 
-    public User(String username, String password, ArrayList<Media> savedMedia, ArrayList<Media> watchedMedia) {
+    public User(String username, String password, ArrayList<Media> savedMedia, ArrayList<Media> watchedMedia, TextUI ui) {
         this.username = username;
         this.password = password;
         this.savedMedia = savedMedia;
         this.watchedMedia = watchedMedia;
+        this.ui = ui;
     }
 
     public void addSavedMedia(Media media) {
@@ -26,18 +28,40 @@ public class User {
         watchedMedia.add(0, media);
     }
 
-    public void userInformation() {
-        ui.displayMessage("=== User Information ===" +
-                "\n Username: " + username +
-                "\n Amount of media watched: " + watchedMedia.size() +
-                "\n Amount of media saved: " + savedMedia.size()
+    public void userInformation(AccountUI accountUI) {
+        ui.displayMessage("\n====== User Information ======" +
+                "\nUsername: " + username +
+                "\nAmount of media watched: " + watchedMedia.size() +
+                "\nAmount of media saved: " + savedMedia.size()
         );
 
-        Menu menu = new Menu("Choose a one of the options");
-/*        menu.add("Look at list of watched media.", //() -> showWatchedList());
-        menu.add("Look and edit list of saved media.", //() -> /*showSavedList());
-        menu.add("Change your password.", //() -> changePassword(password));
-        menu.show();*/
+        while (running) {
+            Menu menu = new Menu("\nChoose a one of the options:");
+            menu.add("Look at list of watched media.", () -> showWatchedList());
+            menu.add("Look and edit list of saved media.", () -> displaySavedList());
+            menu.add("Change your password.", () -> accountUI.changePassword());
+            menu.add("Back", () -> running = false);
+            menu.show();
+
+        }
+    }
+
+    private void showWatchedList() {
+        for (Media media : watchedMedia) {
+            System.out.println(media.getName());
+        }
+    }
+
+    private void displaySavedList() {
+        Menu menu = new Menu("\nHere is a list of all your saved media (choose a media to remove from saved):");
+        for (Media media : savedMedia) {
+            menu.add(media.getName(), () -> {
+                removeSavedMedia(media);
+                ui.displayMessage(media.getName() + " has been removed from saved list");
+            });
+        }
+        menu.add("Back", () -> {});
+        menu.show();
     }
 
     public String getUsername() {

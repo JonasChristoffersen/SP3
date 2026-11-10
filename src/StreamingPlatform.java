@@ -17,7 +17,7 @@ public class StreamingPlatform {
 
     public void startMenu() {
         while (true) {
-            Menu menu = new Menu(name);
+            Menu menu = new Menu("");
             menu.add("Login with already existing account", () -> {
                 if (accountUI.login()) {
                     mainMenu();
@@ -35,8 +35,8 @@ public class StreamingPlatform {
 
     public void mainMenu() {
         while (sessionService.isLoggedIn()) {
-            Menu menu = new Menu("\n====== Main menu ======");
-            menu.add("Your account", () -> sessionService.getCurrentUser().userInformation());
+            Menu menu = new Menu("\n====== " + name + " main menu ======");
+            menu.add("Your account", () -> sessionService.getCurrentUser().userInformation(accountUI));
             menu.add("Search in medias", () -> searchMedia());
             menu.add("Log out", () -> sessionService.logout());
             menu.show();
@@ -44,7 +44,7 @@ public class StreamingPlatform {
     }
 
     public void searchMedia() {
-        Menu menu = new Menu("What kind of search do you want to use?");
+        Menu menu = new Menu("\nWhat kind of search do you want to use?");
         menu.add("Search by name", () -> chooseMediaMenu(searchService.searchByName()));
         menu.add("Search by genre", () -> chooseMediaMenu(searchService.searchByGenre()));
         menu.add("Search by rating", () -> chooseMediaMenu(searchService.searchByRating()));
@@ -61,14 +61,14 @@ public class StreamingPlatform {
     }
 
     public void displaySpecificMedia (Media media) {
-        ui.displayMessage("====== Specific media information ======"
+        ui.displayMessage("\n====== Specific media information ======"
                 + "\n" + "Name: " + media.getName()
                 + "\n" + "Rating: " + media.getRating()
                 + "\n" + "Release year: " + media.getReleaseYear()
                 + "\n" + "Genre(s): " + media.getGenres()
         );
 
-        Menu menu = new Menu("You have the following options:");
+        Menu menu = new Menu("\nYou have the following options:");
         menu.add("Play media", () -> {
             if (media instanceof Series series) {
                 displaySeasonMenu(series);
@@ -77,12 +77,12 @@ public class StreamingPlatform {
                 playableMedia.playMedia(sessionService.getCurrentUser(), media);
             }
         });
-        menu.add("Save media to saved list", () -> System.out.println(media.getName() + " is now saved to saved list")); //CHECK UP ON THIS :)
+        menu.add("Save media to saved list", () -> sessionService.getCurrentUser().addSavedMedia(media));
         menu.show();
     }
 
     private void displaySeasonMenu(Series series) {
-        Menu menu = new Menu("Choose a season from list below:");
+        Menu menu = new Menu("\nChoose a season from list below:");
         for (Season season : series.getSeasons()) {
             menu.add(season.toString(), () -> season.playMedia(sessionService.getCurrentUser(), series));
         }
