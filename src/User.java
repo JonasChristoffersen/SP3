@@ -34,10 +34,10 @@ public class User {
         );
 
         Menu menu = new Menu("Choose a one of the options");
-        menu.add("Look at list of watched media.", //() -> showWatchedList());
+/*        menu.add("Look at list of watched media.", //() -> showWatchedList());
         menu.add("Look and edit list of saved media.", //() -> /*showSavedList());
         menu.add("Change your password.", //() -> changePassword(password));
-        menu.show();
+        menu.show();*/
     }
 
     public String getUsername() {
