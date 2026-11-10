@@ -46,6 +46,35 @@ public class AccountUI {
         return true;
     }
 
+    public boolean changePassword() {
+        if (!sessionService.isLoggedIn()) {
+            ui.displayMessage("You have to be logged in to change your password.");
+            return false;
+        }
+
+        String currentPassword = ui.promptText("Enter your current password:");
+        if (!sessionService.getCurrentUser().checkPassword(currentPassword)) {
+            ui.displayMessage("Wrong password. Your password has not been changed.");
+            return false;
+        }
+
+        while (true) {
+            String newPassword = ui.promptText("Enter your new password:");
+            String repeatedPassword = ui.promptText("Enter your new password again:");
+            if (!newPassword.equals(repeatedPassword)) {
+                ui.displayMessage("The two passwords are not the same. Try again.");
+                continue;
+            }
+            try {
+                sessionService.changePassword(currentPassword, newPassword);
+                ui.displayMessage("Your password has been changed.");
+                return true;
+            } catch (IllegalArgumentException e) {
+                ui.displayMessage(e.getMessage());
+            }
+        }
+    }
+
     private String promptUsername() {
         while (true) {
             String username = ui.promptText("Choose a username:");
