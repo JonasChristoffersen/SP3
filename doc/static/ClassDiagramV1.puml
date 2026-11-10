@@ -3,16 +3,23 @@
 !pragma layout smetana
 
 class Main {
-    + {static} static void main(String[] args)
+    + {static} void main(String[] args)
+    - {static} void printLogo()
 }
 
 class StreamingPlatform {
     - String name
-    - ArrayList<User>
-
-    + StreamingPlatform(String name)
-    + StartMenu()
-    + MainMenu()
+    - TextUI ui
+    - SessionService sessionService
+    - SearchService searchService
+    - AccountUI accountUI
+    + StreamingPlatform(String name, SearchService searchService, SessionService sessionService, AccountUI accountUI)
+    + void startMenu()
+    + void mainMenu()
+    + void searchMedia()
+    - void chooseMediaMenu(ArrayList<Media> mediaArrayList)
+    + void displaySpecificMedia(Media media)
+    - void displaySeasonMenu(Series series)
 }
 
 class User {
@@ -20,10 +27,21 @@ class User {
     - String password
     - ArrayList<Media> savedMedia
     - ArrayList<Media> watchedMedia
-    + User(String username, String password, ArrayList<Media> savedMedia , ArrayList<Media> watchedMedia)
+    - TextUI ui
+    - boolean running
+    + User(String username, String password, ArrayList<Media> savedMedia , ArrayList<Media> watchedMedia, TextUI ui)
     + void addSavedMedia(Media media)
     + void removeSavedMedia(Media media)
     + void addWatchedMedia(Media media)
+    + void userInformation(AccountUI accountUI)
+    - void showWatchedList()
+    - void displaySavedList()
+    + String getUsername()
+    + String getPassword()
+    + boolean checkPassword(String password)
+    + void setPassword(String password)
+    + ArrayList<Media> getSavedMedia()
+    + ArrayList<Media> getWatchedMedia()
 }
 
 abstract class Media {
@@ -32,28 +50,34 @@ abstract class Media {
     - ArrayList<Genre> genre;
     - double rating;
     + Media(String name, double rating, String releaseYear, ArrayList<Genre> genre)
+    + String getName()
+    + double getRating()
+    + int getReleaseYear()
+    + ArrayList<Genre> getGenres()
+    + boolean containsGenre(Genre genre)
 }
 
 interface PlayableMedia {
-    + void playMedia()
+    + void playMedia(User user, Media media)
 }
 
 class Series {
     - ArrayList<Season> seasons
     + Series(String name, double rating, String releaseYear, ArrayList<Genre> genre, ArrayList<Season> seasons)
+    + ArrayList<Season> getSeasons()
 }
 
 class Season {
     - String season
     - String episodes
     + Season(String season)
-    + void playMedia()
+    + void playMedia(User user, Media media)
     + String toString()
 }
 
 class Film {
     + Film(String name, double rating, String releaseYear, ArrayList<Genre> genre)
-    + void playMedia()
+    + void playMedia(User user, Media media)
 }
 
 enum Genre {
@@ -128,14 +152,64 @@ package util {
     }
 }
 
+class SearchService {
+    - TextUI ui
+    - ArrayList<Media> medias
+    + SearchService (TextUI ui, DataLoader dataLoader)
+    + ArrayList<Media> searchByName()
+    + ArrayList<Media> searchByGenre()
+    + ArrayList<Media> searchByRating()
+    + ArrayList<Media> searchByReleaseYear()
+}
+
+class SessionService {
+    - {static} String HEADER
+    - String path
+    - ArrayList<Media> medias
+    - ArrayList<User> users
+    - FileIO fileIO
+    - User currentUser
+    - TextUI ui
+    + SessionService (String path, ArrayList<Media> medias)
+    + void loadUsers()
+    + void saveUser()
+    + boolean login(String username, String password)
+    + void createAccount(String username, String password)
+    + void changePassword(String currentPassword, String newPassword)
+    + void logout()
+    + boolean userExists(String username)
+    + User getCurrentUser()
+    + boolean isLoggedIn()
+    - User findUser(String username)
+    + void validateCredential(String value, String fieldName)
+    - ArrayList<Media> findMediaByNames(String namesString)
+    - Media findMedia(String name)
+    - String joinMediaNames(ArrayList<Media> mediaList)
+}
+
+class AccountUI{
+    - {static} int MAX_LOGIN_ATTEMPTS
+    - TextUI ui
+    - SessionService sessionService
+    + AccountUI (TextUI ui, SessionService sessionService)
+    + boolean login()
+    + boolean createAccount()
+    + boolean changePassword()
+    - String promptUsername()
+    - String promptPassword()
+
+}
+
+
 Main *-- "1" StreamingPlatform : has-a
 
 StreamingPlatform *-- "200" Media : has-a
-StreamingPlatform *-- "*" User : has-a
-/'StreamingPlatform *-- "1" TextUI : has-a'/
 StreamingPlatform *-- "1..*" Menu : has-a
-/'StreamingPlatform *-- "1" FileIO : has-a'/
 StreamingPlatform *-- "1" DataLoader : has-a
+StreamingPlatform *-- "1" SearchService : has-a
+StreamingPlatform *-- "1" TextUI : has-a
+StreamingPlatform *-- "1" SessionService : has-a
+StreamingPlatform *-- "1" AccountUI : has-a
 
 Film <|.. "1" PlayableMedia : is-a
 Season <|.. "1" PlayableMedia : is-a
@@ -150,6 +224,17 @@ Menu *-- "1" TextUI : has-a
 Menu *-- "1..*" Action : has-a
 
 DataLoader *-- "1" FileIO : has-a
+
+SessionService *-- "1..*" User : has-a
+SessionService *-- "1" FileIO : has-a
+SessionService *-- "1" TextUI : has-a
+
+SearchService *-- "1" TextUI : has-a
+
+AccountUI *-- "1" TextUI : has-a
+AccountUI *-- "1" SessionService : has-a
+
+User *-- "1" TextUI : has-a
 
 
 
