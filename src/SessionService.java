@@ -53,7 +53,6 @@ public class SessionService {
         return false;
     }
 
-
     public void createAccount(String username, String password) {
         validateCredential(username, "Username");
         validateCredential(password, "Password");
@@ -98,11 +97,6 @@ public class SessionService {
     public boolean isLoggedIn() {
         return currentUser != null;
     }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
 
     private User findUser(String username) {
         for (User user : users) {
