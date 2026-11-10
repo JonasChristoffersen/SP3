@@ -40,6 +40,7 @@ public class User {
         menu.add("Look and edit list of saved media.", //() -> /*showSavedList());
         menu.add("Change your password.", //() -> changePassword(password));
         menu.add("back", () -> platform.mainMenu());
+        menu.show();
     }
 
 }
