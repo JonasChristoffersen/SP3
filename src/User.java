@@ -11,8 +11,8 @@ public class User {
     public User(String username, String password, ArrayList<Media> savedMedia, ArrayList<Media> watchedMedia, StreamingPlatform platform) {
         this.username = username;
         this.password = password;
-        this.savedMedia = new ArrayList<>();
-        this.watchedMedia = new ArrayList<>();
+        this.savedMedia = savedMedia;
+        this.watchedMedia = watchedMedia;
         this.platform = platform;
     }
 
