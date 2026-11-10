@@ -8,4 +8,8 @@ public class Series extends Media{
         super(name, releaseYear, genre, rating);
         this.seasons = seasons;
     }
+
+    public ArrayList<Season> getSeasons() {
+        return seasons;
+    }
 }

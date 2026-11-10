@@ -46,7 +46,7 @@ public class TextUI {
             }
         } catch(InputMismatchException e){
             scan.nextLine();
-            System.out.println("Write a number");
+            System.out.println("Write a number between: " + min + " - " + max);
             return readInt(msg, min, max);
         }
     }
@@ -58,7 +58,7 @@ public class TextUI {
             input = scan.nextInt();
         } catch (InputMismatchException e) {
             scan.nextLine();
-            System.out.println("Skriv et tal");
+            System.out.println("Write a number");
             input = promptNumeric(msg);
         }
 
@@ -74,7 +74,7 @@ public class TextUI {
             input = scan.nextDouble();
         } catch (InputMismatchException e) {
             scan.nextLine();
-            System.out.println("Skriv et tal");
+            System.out.println("Write a number");
             input = promptDoubleNumeric(msg);
         }
 

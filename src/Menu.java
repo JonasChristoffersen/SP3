@@ -22,7 +22,7 @@ public class Menu {
         for (int i = 0; i < actions.size(); i++) {
             ui.displayMessage((i + 1) + ") " + actions.get(i).getText());
         }
-        int choice = ui.readInt("Vælg:", 1, actions.size());
+        int choice = ui.readInt("Choose:", 1, actions.size());
         actions.get(choice - 1).run();
     }
 }
