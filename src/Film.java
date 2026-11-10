@@ -9,6 +9,7 @@ public class Film extends Media implements PlayableMedia{
 
     @Override
     public void playMedia(User user, Media media) {
-        super.playMedia(user, media);
+        user.addWatchedMedia(media);
+        System.out.println("Now playing: " + media.getName());
     }
 }

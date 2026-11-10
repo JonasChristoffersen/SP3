@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Media implements PlayableMedia{
+public abstract class Media {
     private String name;
     private String releaseYear;
     private ArrayList<Genre> genres;
@@ -43,10 +43,10 @@ public abstract class Media implements PlayableMedia{
         return genres.contains(genre);
     }
 
-    @Override
+/*    @Override
     public void playMedia(User user, Media media) {
         user.addWatchedMedia(media);
         System.out.println("Now playing: " + media.getName());
-    }
+    }*/
 
 }

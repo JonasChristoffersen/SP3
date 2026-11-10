@@ -111,17 +111,30 @@ public class StreamingPlatform {
 
     public void displaySpecificMedia (Media media) {
         ui.displayMessage("====== Specific media information ======"
-                + "\n" + "Media name: " + media.getName()
-                + "\n" + "Media rating: " + media.getRating()
-                + "\n" + "Media release year: " + media.getReleaseYear()
-                + "\n" + "Media genre(s): " + media.getGenres()
+                + "\n" + "Name: " + media.getName()
+                + "\n" + "Rating: " + media.getRating()
+                + "\n" + "Release year: " + media.getReleaseYear()
+                + "\n" + "Genre(s): " + media.getGenres()
         );
 
         Menu menu = new Menu("You have the following options:");
-        menu.add("Play media", () -> media.playMedia(user, media)); //Add media to watched list
-        menu.add("Save media to saved list", () -> System.out.println(media.getName() + " is now saved to saved list"));
+        menu.add("Play media", () -> {
+            if (media instanceof Series series) {
+                displaySeasonMenu(series);
+            } else {
+                PlayableMedia playableMedia = (PlayableMedia) media;
+                playableMedia.playMedia(user, media);
+            }
+        }); //Add media to watched list
+        menu.add("Save media to saved list", () -> System.out.println(media.getName() + " is now saved to saved list")); //CHECK UP ON THIS :)
         menu.show();
     }
 
-
+    private void displaySeasonMenu(Series series) {
+        Menu menu = new Menu("Choose a season from list below:");
+        for (Season season : series.getSeasons()) {
+            menu.add(season.toString(), () -> season.playMedia(user, series));
+        }
+        menu.show();
+    }
 }

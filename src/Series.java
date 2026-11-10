@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Series extends Media implements PlayableMedia{
+public class Series extends Media{
 
     private ArrayList<Season> seasons;
 
@@ -9,8 +9,7 @@ public class Series extends Media implements PlayableMedia{
         this.seasons = seasons;
     }
 
-    @Override
-    public void playMedia(User user, Media media) {
-        super.playMedia(user, media);
+    public ArrayList<Season> getSeasons() {
+        return seasons;
     }
 }

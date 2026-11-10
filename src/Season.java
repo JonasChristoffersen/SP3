@@ -1,4 +1,4 @@
-public class Season extends Series implements PlayableMedia {
+public class Season implements PlayableMedia {
 
     private String season;
     private String episodes;
@@ -12,7 +12,8 @@ public class Season extends Series implements PlayableMedia {
 
     @Override
     public void playMedia(User user, Media media) {
-        super.playMedia(user, media);
+        user.addWatchedMedia(media);
+        System.out.println("Now playing: " + media.getName());
     }
 
     @Override
