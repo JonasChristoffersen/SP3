@@ -2,90 +2,54 @@ import java.util.ArrayList;
 
 public class StreamingPlatform {
     private String name;
-    private User user;
-    private ArrayList<Media> medias;
     private TextUI ui;
+    private SessionService sessionService;
+    private SearchService searchService;
+    private AccountUI accountUI;
 
-    public StreamingPlatform(String name, DataLoader dataLoader) {
+    public StreamingPlatform(String name, SearchService searchService, SessionService sessionService, AccountUI accountUI) {
         this.name = name;
-        this.medias = dataLoader.getMediaArrayList();
+        this.searchService = searchService;
         this.ui = new TextUI();
-        this.user = new User(); //Can be removed!
-        /*this.user = new ArrayList<>();*/
+        this.sessionService = sessionService;
+        this.accountUI = accountUI;
     }
 
     public void startMenu() {
-       Menu menu = new Menu("Welcome to Streaming Platform");
-       menu.add("Login with already existing account", () -> System.out.println("LOGIN"));
-       menu.add("Create new account", () -> System.out.println("CREATE NEW ACCOUNT"));
-       menu.show();
+        while (true) {
+            Menu menu = new Menu(name);
+            menu.add("Login with already existing account", () -> {
+                if (accountUI.login()) {
+                    mainMenu();
+                }
+            });
+            menu.add("Create new account", () -> {
+                if (accountUI.createAccount()) {
+                    mainMenu();
+                }
+            });
+            menu.add("Close/exit " + name, () -> System.exit(0));
+            menu.show();
+        }
     }
 
     public void mainMenu() {
-        Menu menu = new Menu("Main menu: ");
-        menu.add("Your account", () -> userInformation());
-        menu.add("Search in medias", () -> searchMedia());
-        menu.add("Log out", () -> System.out.println("LOG OUT"));
+        while (sessionService.isLoggedIn()) {
+            Menu menu = new Menu("\n====== Main menu ======");
+            menu.add("Your account", () -> sessionService.getCurrentUser().userInformation());
+            menu.add("Search in medias", () -> searchMedia());
+            menu.add("Log out", () -> sessionService.logout());
+            menu.show();
+        }
     }
 
     public void searchMedia() {
         Menu menu = new Menu("What kind of search do you want to use?");
-        menu.add("Search by name", () -> chooseMediaMenu(searchByName()));
-        menu.add("Search by genre", () -> chooseMediaMenu(searchByGenre()));
-        menu.add("Search by rating", () -> chooseMediaMenu(searchByRating()));
-        menu.add("Search by release year", () -> chooseMediaMenu(searchByReleaseYear()));
+        menu.add("Search by name", () -> chooseMediaMenu(searchService.searchByName()));
+        menu.add("Search by genre", () -> chooseMediaMenu(searchService.searchByGenre()));
+        menu.add("Search by rating", () -> chooseMediaMenu(searchService.searchByRating()));
+        menu.add("Search by release year", () -> chooseMediaMenu(searchService.searchByReleaseYear()));
         menu.show();
-    }
-
-    private ArrayList<Media> searchByName() {
-        ArrayList<Media> searchArray = new ArrayList<>();
-        String input = ui.promptText("Type the title you want to search for");
-        for (Media media : medias) {
-            if (media.getName().toLowerCase().contains(input.toLowerCase())) {
-                searchArray.add(media);
-            }
-        }
-        return searchArray;
-    }
-
-    private ArrayList<Media> searchByGenre() {
-        ArrayList<Media> searchArray = new ArrayList<>();
-        Genre[] input = new Genre[1];
-        Menu menu = new Menu("Choose a genre from list below: ");
-        for (Genre genre : Genre.values()) {
-            menu.add(genre.name(), () -> input[0] = genre);
-        }
-        menu.show();
-        for (Media media : medias) {
-            if (media.containsGenre(input[0])) {
-                searchArray.add(media);
-            }
-        }
-        return searchArray;
-    }
-
-    private ArrayList<Media> searchByRating() {
-        ArrayList<Media> searchArray = new ArrayList<>();
-        double ratingMin = ui.promptDoubleNumeric("Type a minimum rating: ");
-        double ratingMax = ui.promptDoubleNumeric("Type a maximum rating: ");
-        for (Media media : medias) {
-            if (media.getRating() >= ratingMin && media.getRating() <= ratingMax) {
-                searchArray.add(media);
-            }
-        }
-        return searchArray;
-    }
-
-    private ArrayList<Media> searchByReleaseYear() {
-        ArrayList<Media> searchArray = new ArrayList<>();
-        int min = ui.promptNumeric("Type a min release year: ");
-        int max = ui.promptNumeric("Type a max release year: ");
-        for (Media media : medias) {
-            if (media.getReleaseYear() >= min && media.getReleaseYear() <= max) {
-                searchArray.add(media);
-            }
-        }
-        return searchArray;
     }
 
     private void chooseMediaMenu(ArrayList<Media> mediaArrayList) {
@@ -110,9 +74,9 @@ public class StreamingPlatform {
                 displaySeasonMenu(series);
             } else {
                 PlayableMedia playableMedia = (PlayableMedia) media;
-                playableMedia.playMedia(user, media);
+                playableMedia.playMedia(sessionService.getCurrentUser(), media);
             }
-        }); //Add media to watched list
+        });
         menu.add("Save media to saved list", () -> System.out.println(media.getName() + " is now saved to saved list")); //CHECK UP ON THIS :)
         menu.show();
     }
@@ -120,7 +84,7 @@ public class StreamingPlatform {
     private void displaySeasonMenu(Series series) {
         Menu menu = new Menu("Choose a season from list below:");
         for (Season season : series.getSeasons()) {
-            menu.add(season.toString(), () -> season.playMedia(user, series));
+            menu.add(season.toString(), () -> season.playMedia(sessionService.getCurrentUser(), series));
         }
         menu.show();
     }
