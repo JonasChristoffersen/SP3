@@ -42,11 +42,4 @@ public abstract class Media {
     public boolean containsGenre(Genre genre){
         return genres.contains(genre);
     }
-
-/*    @Override
-    public void playMedia(User user, Media media) {
-        user.addWatchedMedia(media);
-        System.out.println("Now playing: " + media.getName());
-    }*/
-
 }
