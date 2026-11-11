@@ -1,0 +1,158 @@
+@startuml
+
+!pragma layout smetana
+
+class Main {
+    + {static} static void main(String[] args)
+}
+
+class StreamingPlatform {
+    - String name
+    - ArrayList<User>
+
+    + StreamingPlatform(String name)
+    + StartMenu()
+    + MainMenu()
+}
+
+class User {
+    - String username
+    - String password
+    - ArrayList<Media> savedMedia
+    - ArrayList<Media> watchedMedia
+    + User(String username, String password, ArrayList<Media> savedMedia , ArrayList<Media> watchedMedia)
+    + void addSavedMedia(Media media)
+    + void removeSavedMedia(Media media)
+    + void addWatchedMedia(Media media)
+}
+
+abstract class Media {
+    - String name;
+    - String releaseYear;
+    - ArrayList<Genre> genre;
+    - double rating;
+    + Media(String name, double rating, String releaseYear, ArrayList<Genre> genre)
+}
+
+interface PlayableMedia {
+    + void playMedia()
+}
+
+class Series {
+    - ArrayList<Season> seasons
+    + Series(String name, double rating, String releaseYear, ArrayList<Genre> genre, ArrayList<Season> seasons)
+}
+
+class Season {
+    - String season
+    - String episodes
+    + Season(String season)
+    + void playMedia()
+    + String toString()
+}
+
+class Film {
+    + Film(String name, double rating, String releaseYear, ArrayList<Genre> genre)
+    + void playMedia()
+}
+
+enum Genre {
+    Crime
+    Drama
+    Biography
+    History
+    Sport
+    Romance
+    War
+    Mystery
+    Adventure
+    Family
+    Fantasy
+    Thriller
+    Horror
+    FilmNoir
+    Musical
+    Action
+    SciFi
+    Comedy
+    Western
+    Music
+    Animation
+    Documentary
+    TalkShow
+
+}
+
+package util {
+    class FileIO {
+        + void saveData(ArrayList<String> data, String path, String header)
+        + ArrayList<String> readData(String path)
+        + String[] readData(String path, int length)
+    }
+
+    class TextUI {
+        - Scanner scan
+        + boolean promptBinary(String msg)
+        + String promptText(String msg)
+        + int promptNumeric(String msg)
+        + ArrayList<String> promptChoice(ArrayList<String> options, int limit, String msg)
+        + void displayMessage(String msg)
+        + void displayList(ArrayList<String> list, String msg)
+        + int readInt(String msg, int min, int max)
+    }
+
+    class Menu {
+        - TextUI ui
+        - String title
+        - list<Action> actions
+        + Menu(TextUI ui, String title)
+        + Menu add(String text, Runnable runnable)
+        + void show()
+    }
+
+    class Action {
+        - String text
+        - Runnable runnable
+        + Action(String text, Runnable runnable)
+        + String getText()
+        + void run()
+    }
+
+    class DataLoader {
+        - FileIO fileIO
+        + void loadFilm(String path)
+        + void loadSeries(String path)
+        - ArrayList<Genre> loadGenres(String genreString)
+        - double loadRating(String ratingString)
+        - ArrayList<String> loadSeasons(String seasonsString)
+    }
+}
+
+Main *-- "1" StreamingPlatform : has-a
+
+StreamingPlatform *-- "200" Media : has-a
+StreamingPlatform *-- "*" User : has-a
+/'StreamingPlatform *-- "1" TextUI : has-a'/
+StreamingPlatform *-- "1..*" Menu : has-a
+/'StreamingPlatform *-- "1" FileIO : has-a'/
+StreamingPlatform *-- "1" DataLoader : has-a
+
+Film <|.. "1" PlayableMedia : is-a
+Season <|.. "1" PlayableMedia : is-a
+
+Media <|-- "100" Film : is-a
+Media <|-- "100" Series : is-a
+Media *-- "1..*" Genre : has-a
+
+Series *-- "1..*" Season : has-a
+
+Menu *-- "1" TextUI : has-a
+Menu *-- "1..*" Action : has-a
+
+DataLoader *-- "1" FileIO : has-a
+
+
+
+
+
+@enduml
