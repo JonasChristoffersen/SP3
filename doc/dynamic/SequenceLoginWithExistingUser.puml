@@ -1,0 +1,55 @@
+@startuml
+participant Main
+participant StreamingPlatform
+participant AccountUI
+participant SessionService
+participant TextUI
+participant User
+
+
+Main -> StreamingPlatform : startMenu()
+activate StreamingPlatform
+
+StreamingPlatform -> AccountUI : login()
+activate AccountUI
+
+AccountUI -> TextUI : promptText(username)
+activate TextUI
+return username
+
+AccountUI -> SessionService : userExists(username)
+activate SessionService
+
+loop User user : users
+    SessionService -> SessionService : findUser(username)
+    activate SessionService
+    return user
+end
+return true
+
+loop int attempts = 1; attempts <= MAX_LOGIN_ATTEMPTS; attempts++
+    AccountUI -> TextUI : promptText(password)
+    activate TextUI
+    return password
+    AccountUI -> SessionService : login(username, password)
+    activate SessionService
+    SessionService -> SessionService : findUser(username)
+    activate SessionService
+    return user
+    SessionService -> User : checkPassword(password)
+    activate User
+    return true
+    return true
+    AccountUI -> TextUI : displayMessage(String)
+    return true
+end
+StreamingPlatform -> StreamingPlatform : mainMenu()
+
+
+
+
+
+/'return boolean'/
+
+@enduml
+

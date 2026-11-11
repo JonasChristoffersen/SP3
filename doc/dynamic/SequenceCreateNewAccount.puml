@@ -1,0 +1,61 @@
+@startuml
+participant Main
+participant StreamingPlatform
+participant AccountUI
+participant SessionService
+participant TextUI
+participant FileIO
+
+
+Main -> StreamingPlatform : startMenu()
+activate StreamingPlatform
+
+StreamingPlatform -> AccountUI : createAccount()
+activate AccountUI
+
+AccountUI -> AccountUI : promptUsername()
+
+loop while true
+    activate AccountUI
+
+    AccountUI -> TextUI : promptText(username)
+    activate TextUI
+    return username
+
+    AccountUI -> SessionService : validateCredential(username, "Username")
+    AccountUI -> SessionService : userExists(username)
+    activate SessionService
+    loop User user : users
+        SessionService -> SessionService : findUser(username)
+        activate SessionService
+        return user
+    return false
+    end
+    return username
+end
+
+AccountUI -> AccountUI : promptPassword()
+
+loop while true
+    activate AccountUI
+    AccountUI -> TextUI : promptText(password)
+        activate TextUI
+        return password
+        AccountUI -> SessionService : validateCredential(password, "Password")
+    return password
+end
+
+AccountUI -> SessionService : createAccount(username, password)
+SessionService -> SessionService : saveUser()
+
+SessionService -> FileIO : saveData(data, path, header)
+
+AccountUI -> TextUI : displayMessage(String)
+
+return true
+
+StreamingPlatform -> StreamingPlatform : mainMenu()
+
+
+@enduml
+
