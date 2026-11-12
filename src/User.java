@@ -29,6 +29,7 @@ public class User {
     }
 
     public void userInformation(AccountUI accountUI) {
+        running = true;
         ui.displayMessage("\n====== User Information ======" +
                 "\nUsername: " + username +
                 "\nAmount of media watched: " + watchedMedia.size() +

@@ -1,3 +1,4 @@
 Username; Password; SavedMedia; WatchedMedia
 selina; musse123; Titanic; 
 lucas; musse123; ; Titanic
+John; john123; Platoon; 

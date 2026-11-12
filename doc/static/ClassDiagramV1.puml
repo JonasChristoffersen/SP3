@@ -216,7 +216,7 @@ Season <|.. "1" PlayableMedia : is-a
 
 Media <|-- "100" Film : is-a
 Media <|-- "100" Series : is-a
-Media *-- "1..*" Genre : has-a
+Media *- "1..*" Genre : has-a
 
 Series *-- "1..*" Season : has-a
 
