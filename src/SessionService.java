@@ -54,11 +54,6 @@ public class SessionService {
     }
 
     public void createAccount(String username, String password) {
-        validateCredential(username, "Username");
-        validateCredential(password, "Password");
-        if (userExists(username)) {
-            throw new IllegalArgumentException("The username \"" + username + "\" is already taken.");
-        }
         User user = new User(username, password, new ArrayList<>(), new ArrayList<>(), ui);
         users.add(user);
         saveUser();
